@@ -1,3 +1,14 @@
+1. Stable Coin that is ancored relative stability > $1.00
+    1. chainlink pricefeed
+    2. set a functionto echange ETH & BTC
+2. stablity mechnism(miniting): Algorithmic(Decentrilized)
+    1.People can only mint coin if they have enough colleteral
+3. Colleteral: Exogeneous(crypto) (BTC,ETH)
+    1. wETH
+    2.wBTC
+
+
+
 ## Foundry
 
 **Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust.**

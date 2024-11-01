@@ -31,12 +31,13 @@ contract DSCEngine is ReentrancyGuard {
     error DSCEngine__NotAllowedToken();
     error DSCEngine__TransferFailed();
     // State Variables
+    address[] private s_collateralToken();
 
     mapping(address => address priceFeeds) private s_pricefeeds; //token to price feeds
 
     // maps each user to the token they are using and amount
     mapping(address user => mapping(address token => uint256 amount)) private s_collateralDeposits;
-
+    mapping(address user => uint256 amountDscMinted) private s_DSCMinted;
     // Events
     event ColleteralDeposited(address indexed user, address indexed token, uint256 amount);
     DecentralizedStableCoin private immutable i_dsc;
@@ -64,6 +65,7 @@ contract DSCEngine is ReentrancyGuard {
 
         for (uint256 i = 0; i < tokenAddresses.length; i++) {
             s_pricefeeds[tokenAddresses[i]] = priceFeedsAddesses[i];
+            s_collateralDeposits.push(tokenAddresses[i]);
         }
 
         i_dsc = DecentralizedStableCoin(dscAddress);
@@ -96,11 +98,59 @@ contract DSCEngine is ReentrancyGuard {
 
     function redeemeColleteral() external {}
 
-    function mintDsc(uint256 amountDscToMint) external MoreThanZero(amountDscToMint) {}
+
+
+    /*
+    *@notice follows CEI(chat effects Interaction)
+    *@param tokenColleteralAddress amount of decentrilsed stable coin to mint
+    * They must havr more colleteral value than minimum treshold
+    * 
+    */
+    function mintDsc(uint256 amountDscToMint) external MoreThanZero(amountDscToMint) {
+        s_DSCMinted[msg.sender] += amountDscToMint;
+        // if they minted too muct ($150 DSC, $100 ETH)
+         revertIFHealthFactorIsBroken();
+    }
 
     function burnDsc() external {}
 
     function liquidate() external {}
 
     function getHealthFactor() external view {}
+
+    // Private and Internal functions
+    function _getAccountInformation(address user) private view returns (uint256 totalDSCMinted, uint256 colleteralValueInUsd) {
+        // get the amount of the total DSC minted
+        totalDSCMinted = s_DSCMinted[user];
+        // colleteral value in usd
+        colleteralValueInUsd = getAccountCollateralValue(user);
+    }
+
+    /*
+    *
+    * Returns how close to liquidition a user is
+    * if a user gets below 1. then they can get liquidated
+    */
+    function _healthFactor(address user)  private view returns (uint256) {
+        // Total DSC minted
+        //  Total colleteral value
+        (uint256 totalDSCMinted, uint256 colleteralValueInUsd) = _getAccountInformation(user);
+
+    }
+
+    function _revertIFHealthFactorIsBroken(address user) internal view {
+        // check health factor(Do they have enough colleteral)
+        // revert if they dont
+
+    }
+
+    // Public and external Functions
+    function getAccountCollateralValue(address user) public view returns(uint256){
+        // loop through each colleteral token, get the amount they have deposited and map it to
+        // the price to get the usd value
+        for(uint256 i =0; i<=s_collateralDeposits.length; i++){
+            address token = s_collateralDeposits
+        }
+    }
+
 }

@@ -28,24 +28,24 @@ contract DSCEngineTest is Test {
     //// Price Test ////
     ///////////////////
 
-    // function testGetUsdValue() public view {
-    //     uint256 ethAmount = 15e18;
+    function testGetUsdValue() public view {
+        uint256 ethAmount = 15e18;
 
-    //     uint256 expectedUsd = 30000e18; // Corrected spelling
-    //     uint256 actualUsd = engine.getUsdValue(weth, ethAmount);
-    //     assertEq(expectedUsd, actualUsd);
-    // }
+        uint256 expectedUsd = 30000e18; // Corrected spelling
+        uint256 actualUsd = engine.getUsdValue(weth, ethAmount);
+        assertEq(expectedUsd, actualUsd);
+    }
 
     ///////////////////
     //// Deposit Test ////
     ///////////////////
 
-    // function testReverseIfColleteralIsZero() public {
-    //     vm.startPrank(USER);
-    //     ERC20Mock(weth).approve(address(engine), AMOUNT_COLLATERAL);
-    //     vm.expectRevert(DSCEngine.DSCEngine__NeedsMoreThanZer.selector);
-    //     engine.depositCollateral(weth,0);
-    //     vm.stopPrank();
+        function testReverseIfColleteralIsZero() public {
+            vm.startPrank(USER);
+            ERC20Mock(weth).approve(address(engine), AMOUNT_COLLATERAL);
+            vm.expectRevert(DSCEngine.DSCEngine__NeedsMoreThanZero.selector);
+            engine.depositCollateral(weth,0);
+            vm.stopPrank();
 
-    // }
+        }
 }

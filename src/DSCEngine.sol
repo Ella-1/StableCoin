@@ -185,7 +185,9 @@ contract DSCEngine is ReentrancyGuard {
         return ((uint256(price) * ADDITIONAL_FEED_PRECISION) * amount) / PRECISION;
     }
 
-    function depositCollaterAndMintDsc() external {}
+    function depositCollaterAndMintDsc() external {
+        
+    }
 
     function redeemCollateralForDsc() external {}
 

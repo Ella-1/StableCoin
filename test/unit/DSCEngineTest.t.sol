@@ -3,11 +3,10 @@ pragma solidity ^0.8.20;
 
 import {Test} from "forge-std/Test.sol";
 import {DeployDSc} from "../../script/DeployDSC.s.sol";
-import  {DecentralizedStableCoin } from "../../src/DecentrilisedStableCoin.sol";
+import {DecentralizedStableCoin} from "../../src/DecentrilisedStableCoin.sol";
 import {DSCEngine} from "../../src/DSCEngine.sol";
 import {HelperConfig} from "../../script/HelperConfig.s.sol";
 import {ERC20Mock} from "lib/openzeppelin-contracts/contracts/mocks/token/ERC20Mock.sol";
-
 
 contract DSCEngineTest is Test {
     DeployDSc deployer;
@@ -22,7 +21,7 @@ contract DSCEngineTest is Test {
     function setUp() public {
         deployer = new DeployDSc();
         (scs, engine, config) = deployer.run(); // Corrected variable name to `scs`
-        (ethUsdPriceFeed, , weth, , ) = config.activeNetworkConfig(); // Ensure activeNetworkConfig returns 5 values
+        (ethUsdPriceFeed,, weth,,) = config.activeNetworkConfig(); // Ensure activeNetworkConfig returns 5 values
     }
 
     ///////////////////
@@ -37,7 +36,6 @@ contract DSCEngineTest is Test {
     //     assertEq(expectedUsd, actualUsd);
     // }
 
-
     ///////////////////
     //// Deposit Test ////
     ///////////////////
@@ -50,6 +48,4 @@ contract DSCEngineTest is Test {
     //     vm.stopPrank();
 
     // }
-
-
 }

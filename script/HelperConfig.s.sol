@@ -48,13 +48,18 @@ contract HelperConfig is Script {
         vm.startBroadcast();
         MockV3Aggregator ethUsdPriceFeed = new MockV3Aggregator(DECIMALS, ETH_USD_PRICE);
         MockV3Aggregator btcUsdPriceFeed = new MockV3Aggregator(DECIMALS, BTC_USD_PRICE);
+
+        // Deploy mock WETH and WBTC tokens
+        ERC20Mock wethToken = new ERC20Mock();
+        ERC20Mock wbtcToken = new ERC20Mock();
+
         vm.stopBroadcast();
 
         activeNetworkConfig = NetworkConfig({
             wethUsdPriceFeed: address(ethUsdPriceFeed),
             wbtcUsdPriceFeed: address(btcUsdPriceFeed),
-            weth: address(0), // replace with actual addresses if needed
-            wbtc: address(0), // replace with actual addresses if needed
+            weth: address(wethToken),
+            wbtc: address(wbtcToken),
             deployerKey: DEFAULT_ANVIL_KEY
         });
 

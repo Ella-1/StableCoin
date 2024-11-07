@@ -40,12 +40,11 @@ contract DSCEngineTest is Test {
     //// Deposit Test ////
     ///////////////////
 
-        function testReverseIfColleteralIsZero() public {
-            vm.startPrank(USER);
-            ERC20Mock(weth).approve(address(engine), AMOUNT_COLLATERAL);
-            vm.expectRevert(DSCEngine.DSCEngine__NeedsMoreThanZero.selector);
-            engine.depositCollateral(weth,0);
-            vm.stopPrank();
-
-        }
+    function testReverseIfColleteralIsZero() public {
+        vm.startPrank(USER);
+        ERC20Mock(weth).approve(address(engine), AMOUNT_COLLATERAL);
+        vm.expectRevert(DSCEngine.DSCEngine__NeedsMoreThanZero.selector);
+        engine.depositCollateral(weth, 0);
+        vm.stopPrank();
+    }
 }

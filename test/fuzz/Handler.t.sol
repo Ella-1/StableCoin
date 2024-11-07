@@ -48,6 +48,7 @@ contract Handler is Test {
     function redeemeColleteral(uint256 colleteralSeed, uint256 amountColleteral) public {
         ERC20Mock colleteral = _getColleteralFromSeed(colleteralSeed);
         uint256 maxColleteralToRedeeme = dsce.getCollateralBalanceOfUser(address(colleteral), msg.sender);
-        amountColleteral = bound(amountColleteral);
+        amountColleteral = bound(amountColleteral,1,MAX_DEPOSITE_SIZE);
+        dsce.redeemCollateral(address(colleteral), amountColleteral);
     }
 }
